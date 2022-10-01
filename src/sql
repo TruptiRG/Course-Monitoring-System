@@ -23,14 +23,14 @@ mysql> desc admin;
 2 rows in set (0.34 sec)
 ----------------------------------------------------------------------------------
 
-mysql> create table faculty(facultyId int, facultyName varchar(30), facultyAddress varchar(30), mobile varchar(10), email varchar(30), username varchar(30), password varchar(30));
-Query OK, 0 rows affected (1.22 sec)
+mysql> create table faculty(facultyId int primary key, facultyName varchar(30), facultyAddress varchar(30), mobile varchar(10), email varchar(30), username varchar(30), password varchar(30));
+Query OK, 0 rows affected (0.08 sec)
 
 mysql> desc faculty;
 +----------------+-------------+------+-----+---------+-------+
 | Field          | Type        | Null | Key | Default | Extra |
 +----------------+-------------+------+-----+---------+-------+
-| facultyId      | int         | YES  |     | NULL    |       |
+| facultyId      | int         | NO   | PRI | NULL    |       |
 | facultyName    | varchar(30) | YES  |     | NULL    |       |
 | facultyAddress | varchar(30) | YES  |     | NULL    |       |
 | mobile         | varchar(10) | YES  |     | NULL    |       |
@@ -38,39 +38,39 @@ mysql> desc faculty;
 | username       | varchar(30) | YES  |     | NULL    |       |
 | password       | varchar(30) | YES  |     | NULL    |       |
 +----------------+-------------+------+-----+---------+-------+
-7 rows in set (0.03 sec)
+7 rows in set (0.00 sec)
 -------------------------------------------------------------------------------------
 
-mysql> create table course(courseId int, courseName varchar(30), fee int, courseDescription text);
-Query OK, 0 rows affected (0.09 sec)
+mysql> create table course(courseId int primary key, courseName varchar(30), fee int, courseDescription text);
+Query OK, 0 rows affected (0.17 sec)
 
 mysql> desc course;
 +-------------------+-------------+------+-----+---------+-------+
 | Field             | Type        | Null | Key | Default | Extra |
 +-------------------+-------------+------+-----+---------+-------+
-| courseId          | int         | YES  |     | NULL    |       |
+| courseId          | int         | NO   | PRI | NULL    |       |
 | courseName        | varchar(30) | YES  |     | NULL    |       |
 | fee               | int         | YES  |     | NULL    |       |
 | courseDescription | text        | YES  |     | NULL    |       |
 +-------------------+-------------+------+-----+---------+-------+
-4 rows in set (0.06 sec)
+4 rows in set (0.00 sec)
 ---------------------------------------------------------------------------------------
 
-mysql> create table batch(batchId int, courseId int, facultyId int, numberOf_Students int, batch_startdate date, duration varchar(12));
-Query OK, 0 rows affected (0.09 sec)
+mysql> create table batch(batchId int, courseId int, facultyId int, numberOf_Students int, batch_startdate date, duration varchar(12), foreign key(courseId) references course(courseId), foreign key(facultyId) references faculty(facultyId));
+Query OK, 0 rows affected (0.15 sec)
 
 mysql> desc batch;
 +-------------------+-------------+------+-----+---------+-------+
 | Field             | Type        | Null | Key | Default | Extra |
 +-------------------+-------------+------+-----+---------+-------+
 | batchId           | int         | YES  |     | NULL    |       |
-| courseId          | int         | YES  |     | NULL    |       |
-| facultyId         | int         | YES  |     | NULL    |       |
+| courseId          | int         | YES  | MUL | NULL    |       |
+| facultyId         | int         | YES  | MUL | NULL    |       |
 | numberOf_Students | int         | YES  |     | NULL    |       |
 | batch_startdate   | date        | YES  |     | NULL    |       |
 | duration          | varchar(12) | YES  |     | NULL    |       |
 +-------------------+-------------+------+-----+---------+-------+
-6 rows in set (0.03 sec)
+6 rows in set (0.00 sec)
 -----------------------------------------------------------------------------------------
 
 mysql> create table coursePlan(planId int, batchId int, numberOf_Days int, topic varchar(50), ststus set('Completed','Pending'));
